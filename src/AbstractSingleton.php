@@ -23,21 +23,39 @@ abstract class AbstractSingleton implements SingletonInterface
     /**
      * @var array<object>
      */
-    private static $instance = array();
+    private static $instances = array();
+
+    /**
+     * Prevent the instance from being cloned.
+     *
+     * @return void
+     */
+    protected function __clone()
+    {
+    }
+
+    /**
+     * Prevent from being unserialized.
+     *
+     * @return void
+     */
+    protected function __wakeup()
+    {
+    }
 
     /**
      * {@inheritDoc}
      */
-    public static function getInstance()
+    final public static function getInstance()
     {
         # PHP 5.3 compatibility
         $className = \get_called_class();
 
-        if (false === \array_key_exists($className, self::$instance)) {
-            self::$instance[$className] = $className::newInstance();
+        if (false === \array_key_exists($className, self::$instances)) {
+            self::$instances[$className] = $className::newInstance();
         }
 
-        return self::$instance[$className];
+        return self::$instances[$className];
     }
 
     /**
