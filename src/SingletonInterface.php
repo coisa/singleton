@@ -23,7 +23,7 @@ interface SingletonInterface
     /**
      * Return a shared instance of an object.
      *
-     * @return mixed
+     * @return object
      */
     public static function getInstance();
 }
