@@ -21,16 +21,9 @@ namespace CoiSA\Singleton;
 trait SingletonTrait
 {
     /**
-     * @var object
+     * @var static
      */
-    protected static $instance;
-
-    /**
-     * SingletonTrait constructor.
-     */
-    final public function __construct()
-    {
-    }
+    private static $instance;
 
     /**
      * Prevent the instance from being cloned.
@@ -51,17 +44,21 @@ trait SingletonTrait
     }
 
     /**
-     * @return object
+     * {@inheritDoc}
      */
     final public static function getInstance()
     {
-        # PHP 5.3 compatibility
-        $className = \get_called_class();
-
-        if (null === $className::$instance) {
-            $className::$instance = new $className();
+        if (false === static::$instance) {
+            static::$instance = static::newInstance();
         }
 
-        return $className::$instance;
+        return static::$instance;
     }
+
+    /**
+     * Create a new instance of this object.
+     *
+     * @return static
+     */
+    abstract protected static function newInstance();
 }
