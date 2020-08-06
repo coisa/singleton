@@ -48,7 +48,7 @@ trait SingletonTrait
      */
     final public static function getInstance()
     {
-        if (false === static::$instance) {
+        if (null === static::$instance) {
             static::$instance = static::newInstance();
         }
 
