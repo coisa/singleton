@@ -23,7 +23,7 @@ trait SingletonTrait
     /**
      * @var static
      */
-    private static $instance;
+    protected static $instance;
 
     /**
      * Prevent the instance from being cloned.
