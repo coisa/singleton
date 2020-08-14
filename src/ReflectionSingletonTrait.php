@@ -25,16 +25,12 @@ trait ReflectionSingletonTrait
     /**
      * Create a new instance of this object.
      *
-     * @return object
+     * @return static
      */
     protected static function newInstance()
     {
-        $reflectionClass = new \ReflectionClass(static::class);
+        $reflectionSingleton = new ReflectionSingletonInvokable();
 
-        if (null === $reflectionClass->getConstructor()) {
-            return $reflectionClass->newInstanceWithoutConstructor();
-        }
-
-        return $reflectionClass->newInstance();
+        return $reflectionSingleton(static::class);
     }
 }

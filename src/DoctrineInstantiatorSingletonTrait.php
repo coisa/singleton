@@ -13,8 +13,6 @@
 
 namespace CoiSA\Singleton;
 
-use Doctrine\Instantiator\Instantiator;
-
 /**
  * Trait DoctrineInstantiatorSingletonTrait
  *
@@ -27,12 +25,12 @@ trait DoctrineInstantiatorSingletonTrait
     /**
      * Create a new instance of this object.
      *
-     * @return object
+     * @return static
      */
     protected static function newInstance()
     {
-        $instantiator = new Instantiator();
+        $doctrineInstantiatorSingletonInvokable = new DoctrineInstantiatorSingletonInvokable();
 
-        return $instantiator->instantiate(static::class);
+        return $doctrineInstantiatorSingletonInvokable(static::class);
     }
 }

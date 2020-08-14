@@ -44,7 +44,9 @@ trait SingletonTrait
     }
 
     /**
-     * {@inheritDoc}
+     * Return a shared instance of an object.
+     *
+     * @return static
      */
     final public static function getInstance()
     {
