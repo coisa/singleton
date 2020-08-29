@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "coisa/factory": "1.x-dev"
     },
     "require-dev": {
         "coisa/php-cs-fixer": "^1.0",

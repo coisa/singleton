@@ -21,11 +21,6 @@ namespace CoiSA\Singleton;
 abstract class AbstractSingleton implements SingletonInterface
 {
     /**
-     * @var array<object>
-     */
-    private static $instances = array();
-
-    /**
      * Prevent the instance from being cloned.
      *
      * @return void
@@ -51,17 +46,9 @@ abstract class AbstractSingleton implements SingletonInterface
         # PHP 5.3 compatibility
         $className = \get_called_class();
 
-        if (false === \array_key_exists($className, self::$instances)) {
-            self::$instances[$className] = $className::newInstance();
-        }
+        $arguments = \func_get_args();
+        \array_unshift($arguments, $className);
 
-        return self::$instances[$className];
+        return \call_user_func_array(array('CoiSA\\Singleton\\Singleton', 'getInstance'), $arguments);
     }
-
-    /**
-     * Create a new instance of an object.
-     *
-     * @return mixed
-     */
-    abstract protected static function newInstance();
 }
