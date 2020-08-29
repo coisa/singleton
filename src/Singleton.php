@@ -40,9 +40,9 @@ final class Singleton implements SingletonInterface
     public static function getInstance()
     {
         $arguments = \func_get_args();
-        $className = \array_shift($arguments);
         $serialize = \serialize($arguments);
         $hash      = \sha1($serialize);
+        $className = \array_shift($arguments);
 
         if (false === \array_key_exists($hash, self::$instances)) {
             self::$instances[$hash] = StaticFactory::create($className, $arguments);
