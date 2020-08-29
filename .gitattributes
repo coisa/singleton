@@ -1,4 +1,5 @@
 *               text=auto
+/examples/      export-ignore
 /tests/         export-ignore
 /.docheader     export-ignore
 /.editorconfig  export-ignore
