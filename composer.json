@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "coisa/factory": "1.x-dev"
+        "coisa/factory": "^1.0"
     },
     "require-dev": {
         "coisa/php-cs-fixer": "^1.0",
