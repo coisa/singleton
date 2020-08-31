@@ -13,7 +13,17 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$object = \CoiSA\Singleton\Singleton::getInstance('stdClass');
+class MySingleton
+{
+    public $params;
 
-\var_dump($object === \CoiSA\Singleton\Singleton::getInstance('stdClass'));
-\var_dump($object !== \CoiSA\Singleton\Singleton::getInstance('stdClass', 1));
+    public function __construct()
+    {
+        $this->params = \func_get_args();
+    }
+}
+
+$object = \CoiSA\Singleton\Singleton::getInstance('MySingleton');
+
+\var_dump($object === \CoiSA\Singleton\Singleton::getInstance('MySingleton'));
+\var_dump($object !== \CoiSA\Singleton\Singleton::getInstance('MySingleton', 1));

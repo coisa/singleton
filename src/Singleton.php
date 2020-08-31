@@ -13,8 +13,6 @@
 
 namespace CoiSA\Singleton;
 
-use CoiSA\Factory\StaticFactory;
-
 /**
  * Class Singleton
  *
@@ -42,10 +40,12 @@ final class Singleton implements SingletonInterface
         $arguments = \func_get_args();
         $serialize = \serialize($arguments);
         $hash      = \sha1($serialize);
-        $className = \array_shift($arguments);
 
         if (false === \array_key_exists($hash, self::$instances)) {
-            self::$instances[$hash] = StaticFactory::create($className, $arguments);
+            self::$instances[$hash] = \call_user_func_array(
+                array('CoiSA\\Factory\\StaticFactory', 'create'),
+                $arguments
+            );
         }
 
         return self::$instances[$hash];
