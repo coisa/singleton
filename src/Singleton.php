@@ -28,12 +28,16 @@ final class Singleton implements SingletonInterface
      */
     private static $instances = array();
 
+    // @codeCoverageIgnoreStart
+
     /**
      * Prevent class from being initialized.
      */
     private function __construct()
     {
     }
+
+    // @codeCoverageIgnoreEnd
 
     /**
      * {@inheritDoc}

@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace CoiSA\Singleton\Test\Functional;
+namespace CoiSA\Singleton\Test;
 
 use CoiSA\Factory\CallableFactory;
 use CoiSA\Singleton\Singleton;
@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class SingletonTest
  *
- * @package CoiSA\Singleton\Test\Functional
+ * @package CoiSA\Singleton\Test
  */
 final class SingletonTest extends TestCase
 {

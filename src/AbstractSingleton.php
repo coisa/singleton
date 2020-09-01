@@ -20,12 +20,23 @@ namespace CoiSA\Singleton;
  */
 abstract class AbstractSingleton implements SingletonInterface
 {
+    // @codeCoverageIgnoreStart
+
     /**
      * Prevent the instance from being cloned.
      *
      * @return void
      */
-    protected function __clone()
+    final protected function __clone()
+    {
+    }
+
+    /**
+     * Prevent from being serialized.
+     *
+     * @return void
+     */
+    final protected function __sleep()
     {
     }
 
@@ -34,9 +45,11 @@ abstract class AbstractSingleton implements SingletonInterface
      *
      * @return void
      */
-    protected function __wakeup()
+    final protected function __wakeup()
     {
     }
+
+    // @codeCoverageIgnoreEnd
 
     /**
      * {@inheritDoc}
