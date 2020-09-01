@@ -24,20 +24,14 @@ use PHPUnit\Framework\TestCase;
  */
 final class SingletonTest extends TestCase
 {
-    /**
-     * @expectedException \Error
-     */
-    public function testNewSingletonWillThrowError()
-    {
-        new Singleton();
-    }
-
-    public function testNewSingletonWithReflectionOnlyForOneHundredPercentOfTests()
+    public function testConstructorIsNotPublic()
     {
         $reflectionClass = new \ReflectionClass('CoiSA\\Singleton\\Singleton');
-        $object          = $reflectionClass->newInstanceWithoutConstructor();
         $constructor     = $reflectionClass->getConstructor();
 
+        self::assertFalse($constructor->isPublic());
+
+        $object = $reflectionClass->newInstanceWithoutConstructor();
         $constructor->setAccessible(true);
         $constructor->invoke($object);
     }
