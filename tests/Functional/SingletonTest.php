@@ -11,29 +11,33 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace CoiSA\Singleton;
+namespace CoiSA\Singleton\Test\Functional;
 
 use CoiSA\Factory\CallableFactory;
 use CoiSA\Factory\StaticFactory;
+use CoiSA\Singleton\Singleton;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class SingletonTest
  *
- * @package CoiSA\Singleton
+ * @package CoiSA\Singleton\Test\Functional
  */
 final class SingletonTest extends TestCase
 {
+    public function testClassIsFinal()
+    {
+        $reflectionClass = new \ReflectionClass('CoiSA\\Singleton\\Singleton');
+
+        self::assertTrue($reflectionClass->isFinal());
+    }
+
     public function testConstructorIsNotPublic()
     {
         $reflectionClass = new \ReflectionClass('CoiSA\\Singleton\\Singleton');
         $constructor     = $reflectionClass->getConstructor();
 
         self::assertFalse($constructor->isPublic());
-
-        $object = $reflectionClass->newInstanceWithoutConstructor();
-        $constructor->setAccessible(true);
-        $constructor->invoke($object);
     }
 
     public function testGetInstanceWillReturnInstanceFromFactoryCreate()

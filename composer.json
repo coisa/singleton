@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CoiSA\\Singleton\\": "tests/"
+            "CoiSA\\Singleton\\Test\\": "tests/"
         }
     },
     "minimum-stability": "stable",
