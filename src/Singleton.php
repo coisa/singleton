@@ -42,12 +42,19 @@ final class Singleton implements SingletonInterface
         $hash      = \sha1($serialize);
 
         if (false === \array_key_exists($hash, self::$instances)) {
-            self::$instances[$hash] = \call_user_func_array(
-                array('CoiSA\\Factory\\StaticFactory', 'create'),
-                $arguments
-            );
+            self::setInstance($hash, $arguments);
         }
 
         return self::$instances[$hash];
+    }
+
+    /**
+     * @param string $hash
+     * @param array  $arguments
+     */
+    private static function setInstance($hash, array $arguments)
+    {
+        $factory                = array('CoiSA\\Factory\\StaticFactory', 'create');
+        self::$instances[$hash] = \call_user_func_array($factory, $arguments);
     }
 }
