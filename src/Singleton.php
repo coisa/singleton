@@ -13,6 +13,9 @@
 
 namespace CoiSA\Singleton;
 
+use CoiSA\Factory\FactoryInterface;
+use CoiSA\Factory\StaticFactory;
+
 /**
  * Class Singleton
  *
@@ -46,6 +49,15 @@ final class Singleton implements SingletonInterface
         }
 
         return self::$instances[$hash];
+    }
+
+    /**
+     * @param string           $class
+     * @param FactoryInterface $factory
+     */
+    public static function setFactory($class, FactoryInterface $factory)
+    {
+        StaticFactory::setFactory($class, $factory);
     }
 
     /**

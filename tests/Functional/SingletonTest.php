@@ -14,7 +14,6 @@
 namespace CoiSA\Singleton\Test\Functional;
 
 use CoiSA\Factory\CallableFactory;
-use CoiSA\Factory\StaticFactory;
 use CoiSA\Singleton\Singleton;
 use PHPUnit\Framework\TestCase;
 
@@ -42,7 +41,7 @@ final class SingletonTest extends TestCase
 
     public function testGetInstanceWillReturnInstanceFromFactoryCreate()
     {
-        StaticFactory::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
+        Singleton::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
             $object = new \stdClass();
             $object->arg1 = $arg1;
             $object->arg2 = $arg2;
@@ -67,7 +66,7 @@ final class SingletonTest extends TestCase
 
         self::assertSame($object1, $object2);
 
-        StaticFactory::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
+        Singleton::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
             $object = new \stdClass();
             $object->arg1 = $arg1;
             $object->arg2 = $arg2;
@@ -94,7 +93,7 @@ final class SingletonTest extends TestCase
 
     public function testGetInstanceWithDifferentArgumentsWillReturnDifferentInstance()
     {
-        StaticFactory::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
+        Singleton::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
             $object = new \stdClass();
             $object->arg1 = $arg1;
             $object->arg2 = $arg2;
