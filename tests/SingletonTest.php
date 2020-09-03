@@ -123,7 +123,6 @@ final class SingletonTest extends TestCase
         $object2 = Singleton::getInstance($class);
 
         self::assertSame($object1, $object2);
-        self::assertCount(1, Singleton::getInstancesForClass($class));
 
         Singleton::setFactory($class, new CallableFactory(function () {
             return new \stdClass();
@@ -134,6 +133,5 @@ final class SingletonTest extends TestCase
 
         self::assertNotSame($object1, $object3);
         self::assertSame($object3, $object4);
-        self::assertCount(1, Singleton::getInstancesForClass($class));
     }
 }

@@ -72,7 +72,7 @@ final class Singleton implements SingletonInterface
      *
      * @return array<object>
      */
-    public static function getInstancesForClass($class)
+    private static function getInstancesForClass($class)
     {
         if (false === \array_key_exists($class, self::$instances)) {
             self::$instances[$class] = array();
