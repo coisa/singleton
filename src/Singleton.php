@@ -45,14 +45,16 @@ final class Singleton implements SingletonInterface
     public static function getInstance()
     {
         $arguments = \func_get_args();
+        $class     = \array_shift($arguments);
+        $instances = self::getInstancesForClass($class);
         $serialize = \serialize($arguments);
         $hash      = \sha1($serialize);
 
-        if (false === \array_key_exists($hash, self::$instances)) {
-            self::setInstance($hash, $arguments);
+        if (false === \array_key_exists($hash, $instances)) {
+            self::setInstanceForClass($class, $hash, $arguments);
         }
 
-        return self::$instances[$hash];
+        return self::$instances[$class][$hash];
     }
 
     /**
@@ -61,16 +63,44 @@ final class Singleton implements SingletonInterface
      */
     public static function setFactory($class, FactoryInterface $factory)
     {
+        self::resetInstancesForClass($class);
         StaticFactory::setFactory($class, $factory);
     }
 
     /**
+     * @param string $class
+     *
+     * @return array<object>
+     */
+    public static function getInstancesForClass($class)
+    {
+        if (false === \array_key_exists($class, self::$instances)) {
+            self::$instances[$class] = array();
+        }
+
+        return self::$instances[$class];
+    }
+
+    /**
+     * @param string $class
+     */
+    private static function resetInstancesForClass($class)
+    {
+        if (\array_key_exists($class, self::$instances)) {
+            unset(self::$instances[$class]);
+        }
+    }
+
+    /**
+     * @param string $class
      * @param string $hash
      * @param array  $arguments
      */
-    private static function setInstance($hash, array $arguments)
+    private static function setInstanceForClass($class, $hash, array $arguments)
     {
-        $factory                = array('CoiSA\\Factory\\StaticFactory', 'create');
-        self::$instances[$hash] = \call_user_func_array($factory, $arguments);
+        \array_unshift($arguments, $class);
+
+        $factory                        = array('CoiSA\\Factory\\StaticFactory', 'create');
+        self::$instances[$class][$hash] = \call_user_func_array($factory, $arguments);
     }
 }
