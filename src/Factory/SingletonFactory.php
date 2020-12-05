@@ -14,7 +14,6 @@
 namespace CoiSA\Singleton\Factory;
 
 use CoiSA\Factory\AbstractFactory;
-use CoiSA\Factory\FactoryInterface;
 use CoiSA\Singleton\Registry\SingletonRegistry;
 
 /**
@@ -22,7 +21,7 @@ use CoiSA\Singleton\Registry\SingletonRegistry;
  *
  * @package CoiSA\Singleton\Factory
  */
-final class SingletonFactory implements FactoryInterface
+final class SingletonFactory implements SingletonFactoryInterface
 {
     /**
      * @var string
