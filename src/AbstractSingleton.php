@@ -7,14 +7,14 @@
  * with this source code in the file LICENSE.
  *
  * @link      https://github.com/coisa/singleton
+ *
  * @copyright Copyright (c) 2020 Felipe Sayão Lobato Abreu <github@felipeabreu.com.br>
  * @license   https://opensource.org/licenses/MIT MIT License
  */
-
 namespace CoiSA\Singleton;
 
 /**
- * Class AbstractSingleton
+ * Class AbstractSingleton.
  *
  * @package CoiSA\Singleton
  */
@@ -52,7 +52,7 @@ abstract class AbstractSingleton implements SingletonInterface
     // @codeCoverageIgnoreEnd
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     final public static function getInstance()
     {

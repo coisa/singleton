@@ -7,10 +7,10 @@
  * with this source code in the file LICENSE.
  *
  * @link      https://github.com/coisa/singleton
+ *
  * @copyright Copyright (c) 2020 Felipe Sayão Lobato Abreu <github@felipeabreu.com.br>
  * @license   https://opensource.org/licenses/MIT MIT License
  */
-
 namespace CoiSA\Singleton\Test;
 
 use CoiSA\Factory\CallableFactory;
@@ -18,7 +18,7 @@ use CoiSA\Singleton\Singleton;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SingletonTest
+ * Class SingletonTest.
  *
  * @package CoiSA\Singleton\Test
  */
@@ -41,7 +41,7 @@ final class SingletonTest extends TestCase
 
     public function testGetInstanceWillReturnInstanceFromFactoryCreate()
     {
-        Singleton::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
+        Singleton::setFactory('stdClass', new CallableFactory(function($arg1, $arg2) {
             $object = new \stdClass();
             $object->arg1 = $arg1;
             $object->arg2 = $arg2;
@@ -66,7 +66,7 @@ final class SingletonTest extends TestCase
 
         self::assertSame($object1, $object2);
 
-        Singleton::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
+        Singleton::setFactory('stdClass', new CallableFactory(function($arg1, $arg2) {
             $object = new \stdClass();
             $object->arg1 = $arg1;
             $object->arg2 = $arg2;
@@ -93,7 +93,7 @@ final class SingletonTest extends TestCase
 
     public function testGetInstanceWithDifferentArgumentsWillReturnDifferentInstance()
     {
-        Singleton::setFactory('stdClass', new CallableFactory(function ($arg1, $arg2) {
+        Singleton::setFactory('stdClass', new CallableFactory(function($arg1, $arg2) {
             $object = new \stdClass();
             $object->arg1 = $arg1;
             $object->arg2 = $arg2;
@@ -115,7 +115,7 @@ final class SingletonTest extends TestCase
     {
         $class = 'stdClass';
 
-        Singleton::setFactory($class, new CallableFactory(function () {
+        Singleton::setFactory($class, new CallableFactory(function() {
             return new \stdClass();
         }));
 
@@ -124,7 +124,7 @@ final class SingletonTest extends TestCase
 
         self::assertSame($object1, $object2);
 
-        Singleton::setFactory($class, new CallableFactory(function () {
+        Singleton::setFactory($class, new CallableFactory(function() {
             return new \stdClass();
         }));
 
