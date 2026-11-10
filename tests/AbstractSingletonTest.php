@@ -31,11 +31,23 @@ final class AbstractSingletonTest extends TestCase
         self::assertTrue($cloneMethod->isFinal());
         self::assertTrue($cloneMethod->isProtected());
 
-        $objectProphecy = $this->prophesize('CoiSA\\Singleton\\AbstractSingleton');
-        $object         = $objectProphecy->reveal();
+        $object = ExtendedAbstractSingleton::getInstance();
+        if (PHP_VERSION_ID < 70000) {
+            $this->setExpectedException('ReflectionException');
+            $cloneMethod->invoke($object);
 
-        $this->setExpectedException('ReflectionException');
-        $cloneMethod->invoke($object);
+            return;
+        }
+
+        try {
+            clone $object;
+        } catch (\Error $exception) {
+            self::assertNotFalse(\strpos($exception->getMessage(), '__clone'));
+
+            return;
+        }
+
+        self::fail('Cloning the singleton unexpectedly succeeded');
     }
 
     public function testGetInstanceWillReturnSameInstance()

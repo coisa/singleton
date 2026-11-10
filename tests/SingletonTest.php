@@ -83,12 +83,22 @@ final class SingletonTest extends TestCase
         self::assertSame($object1, $object2);
     }
 
-    /**
-     * @expectedException \ReflectionException
-     */
-    public function testGetInstanceWithParametersOnClassWithoutConstructorWillThrowReflectionException()
+    public function testGetInstancePropagatesFactoryReflectionException()
     {
-        Singleton::getInstance('stdClass', \uniqid('test', true));
+        $expected = new \ReflectionException('Fixture factory cannot instantiate the class');
+        Singleton::setFactory('stdClass', new CallableFactory(function() use ($expected) {
+            throw $expected;
+        }));
+
+        try {
+            Singleton::getInstance('stdClass');
+        } catch (\ReflectionException $actual) {
+            self::assertSame($expected, $actual);
+
+            return;
+        }
+
+        self::fail('The factory exception was not propagated');
     }
 
     public function testGetInstanceWithDifferentArgumentsWillReturnDifferentInstance()
