@@ -23,4 +23,7 @@ if (!$explicitConfiguration && class_exists('Composer\\InstalledVersions')
     array_splice($_SERVER['argv'], 1, 0, array('--configuration', $root . '/phpunit-modern.xml'));
 }
 
-require $root . '/vendor/bin/phpunit';
+$php = defined('PHP_BINARY') ? PHP_BINARY : PHP_BINDIR . DIRECTORY_SEPARATOR . 'php';
+$command = array_merge(array($php, $root . '/vendor/bin/phpunit'), array_slice($_SERVER['argv'], 1));
+passthru(implode(' ', array_map('escapeshellarg', $command)), $status);
+exit($status);
