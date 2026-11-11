@@ -47,3 +47,9 @@ jobs:
 
       - name: Run test suite
         run: composer run-script test
+
+      - name: Verify test reports
+        run: |
+          test -s tests/clover.xml
+          test -s tests/html/index.html
+          test -s tests/testdox.html
