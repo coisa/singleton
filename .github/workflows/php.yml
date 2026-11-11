@@ -1,40 +1,55 @@
 name: PHP
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   tests:
+    runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
-        operating-system: [ubuntu-16.04]
-        php-versions: ['5.3']
-    runs-on: ${{ matrix.operating-system }}
+        include:
+          - php-version: '5.3'
+            composer-version: '2.2'
+          - php-version: '8.5'
+            composer-version: '2'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
+          tools: composer:${{ matrix.composer-version }}
           coverage: xdebug
-          ini-values: memory_limit=-1
+          ini-values: memory_limit=-1, xdebug.max_nesting_level=512
 
       - name: Validate composer.json and composer.lock
         run: composer validate
 
       - name: Get composer cache directory
         id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: printf 'dir=%s\n' "$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache composer dependencies
         id: composer-cache
-        uses: actions/cache@v2
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: ${{ steps.composercache.outputs.dir }}
-          key: ${{ matrix.php-versions }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ matrix.php-versions }}-composer-
+          key: ${{ runner.os }}-php-${{ matrix.php-version }}-composer-${{ matrix.composer-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php-version }}-composer-${{ matrix.composer-version }}-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-interaction --no-plugins --no-scripts
 
       - name: Run test suite
         run: composer run-script test
+
+      - name: Verify test reports
+        run: |
+          test -s tests/clover.xml
+          test -s tests/html/index.html
+          test -s tests/testdox.html
